@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Royal Eye Wedding Car Dashboard</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="stylesheet" href="style.css?v=20260603-4">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <div>
+          <p class="eyebrow">Royal Eye Wedding Car</p>
+          <h1>Business Dashboard</h1>
+          <p id="selectedPeriod" class="period-label">Loading month...</p>
+        </div>
+        <div class="header-panel">
+          <span class="panel-label">Expected Profit</span>
+          <strong id="headerProfit">Rs. 0</strong>
+        </div>
+      </header>
+
+      <main>
+        <section class="toolbar" aria-label="Month controls">
+          <button id="prevMonth" class="icon-button" type="button" aria-label="Previous month">&lsaquo;</button>
+          <label class="month-picker">
+            <span>Month</span>
+            <select id="monthSelect"></select>
+          </label>
+          <button id="nextMonth" class="icon-button" type="button" aria-label="Next month">&rsaquo;</button>
+        </section>
+
+        <section id="statusBanner" class="status-banner" role="status"></section>
+
+        <section class="kpi-grid" aria-label="Dashboard summary">
+          <article class="kpi-card accent">
+            <span>Expected Income</span>
+            <strong id="expectedIncome">Rs. 0</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Confirmed Income</span>
+            <strong id="confirmedIncome">Rs. 0</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Pending Income</span>
+            <strong id="pendingIncome">Rs. 0</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Job Expenses</span>
+            <strong id="jobExpenses">Rs. 0</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Business Expenses</span>
+            <strong id="businessExpenses">Rs. 0</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Total Expenses</span>
+            <strong id="totalExpenses">Rs. 0</strong>
+          </article>
+          <article class="kpi-card profit">
+            <span>Expected Profit</span>
+            <strong id="expectedProfit">Rs. 0</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Confirmed Profit</span>
+            <strong id="confirmedProfit">Rs. 0</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Booking Count</span>
+            <strong id="bookingCount">0</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Average Booking Price</span>
+            <strong id="averageBookingPrice">Rs. 0</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Profit Margin</span>
+            <strong id="profitMargin">0%</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Confirmation Rate</span>
+            <strong id="confirmationRate">0%</strong>
+          </article>
+        </section>
+
+        <section class="summary-section">
+          <h2>Investor Summary</h2>
+          <p id="investorSummary">Loading business summary...</p>
+        </section>
+
+        <section class="charts-grid" aria-label="Charts">
+          <article class="chart-card wide">
+            <h2>Income, Expenses, Profit</h2>
+            <div class="chart-wrap"><canvas id="monthlyChart"></canvas></div>
+          </article>
+          <article class="chart-card">
+            <h2>Expense Breakdown</h2>
+            <div class="chart-wrap"><canvas id="expenseChart"></canvas></div>
+          </article>
+          <article class="chart-card">
+            <h2>Booking Status</h2>
+            <div class="chart-wrap"><canvas id="statusChart"></canvas></div>
+          </article>
+          <article class="chart-card">
+            <h2>Time Slots</h2>
+            <div class="chart-wrap"><canvas id="slotChart"></canvas></div>
+          </article>
+        </section>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <h2>Monthly Calendar</h2>
+            <p>Bookings by date, status, and estimated job profit.</p>
+          </div>
+          <div class="calendar-scroll">
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            </div>
+            <div id="calendarGrid" class="calendar-grid"></div>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <h2>Bookings</h2>
+            <p id="bookingListMeta">Monthly booking details.</p>
+          </div>
+          <div id="bookingTableWrap" class="table-wrap"></div>
+          <div id="bookingCards" class="mobile-list"></div>
+        </section>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <h2>Expense Breakdown</h2>
+            <p id="expenseBreakdownMeta">Cost totals by category.</p>
+          </div>
+          <div id="expenseBreakdownTableWrap" class="table-wrap"></div>
+          <div id="expenseBreakdownCards" class="mobile-list"></div>
+        </section>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <h2>Job Expenses</h2>
+            <p id="jobExpenseListMeta">Monthly booking-related expenses.</p>
+          </div>
+          <div id="jobExpenseTableWrap" class="table-wrap"></div>
+          <div id="jobExpenseCards" class="mobile-list"></div>
+        </section>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <h2>Business Expenses</h2>
+            <p id="expenseListMeta">Monthly general business expenses from Google Sheets.</p>
+          </div>
+          <div id="expenseTableWrap" class="table-wrap"></div>
+          <div id="expenseCards" class="mobile-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="script.js?v=20260603-4"></script>
+  </body>
+</html>
